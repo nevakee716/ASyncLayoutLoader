@@ -14,18 +14,19 @@
             url = "../../Common/" + url;
         }
         if(!this.urls.hasOwnProperty(url)) {
-            console.log("create " + url);
+            console.log("<AsyncLayoutLoader> start loading of " + url);
             this.urls[url] = new cwApi.customLibs.urlToLoadAsync(url,callback);
             this.urls[url].load();
         } else {
             var status = this.urls[url].getStatus();
             if(status === "inLoad") {
-                console.log("url " + url + " inload adding callback");
+                console.log("<AsyncLayoutLoader> url " + url + " inload : adding callback");
                 this.urls[url].addCallback(callback);
             } else if(status === "loaded") {
-                callback();
-                console.log("url " + url + " already loading");
+                console.log("<AsyncLayoutLoader> url " + url + " already loaded : calling callback");
+                callback(null);
             } else if(status === "failed") {
+                console.log("<AsyncLayoutLoader> url " + url + " load already failed : return error");
                 callback(this.urls[url].getError());
             }
         }
