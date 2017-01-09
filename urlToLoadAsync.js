@@ -38,7 +38,7 @@
                 });
             },
             error: function(XMLHttpRequest) { 
-                if(XMLHttpRequest.status !== "200") {
+                if(XMLHttpRequest.status != "200") {
                     that.status = "failed";
                     that.error = "error " + XMLHttpRequest.status + " : " + XMLHttpRequest.statusText;
                     that.callbacks.forEach(function(callback) {
