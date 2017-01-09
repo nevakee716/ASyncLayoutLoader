@@ -38,11 +38,17 @@
                 });
             },
             error: function(XMLHttpRequest) { 
-                that.status = "failed";
-                that.error = "error " + XMLHttpRequest.status + " : " + XMLHttpRequest.statusText;
-                that.callbacks.forEach(function(callback) {
-                    callback(that.error);
-                });
+                if(XMLHttpRequest.status !== "200") {
+                    that.status = "failed";
+                    that.error = "error " + XMLHttpRequest.status + " : " + XMLHttpRequest.statusText;
+                    that.callbacks.forEach(function(callback) {
+                        callback(that.error);
+                    });
+                } else {
+                    that.callbacks.forEach(function(callback) {
+                        callback(null);
+                    });  
+                }
             }  
         });
     };
